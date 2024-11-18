@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriSense Insights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>AgriSense</h1>
+                <p>Smarter Farming Solutions</p>
+            </div>
+            <nav>
+                <a href="#yield">Yield Prediction</a>
+                <a href="#disease">Disease Risk</a>
+                <a href="#irrigation">Irrigation Advice</a>
+                <a href="#form-section">Farming Insights</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="yield" class="section">
+            <h2>Yield Prediction</h2>
+            <form id="yield-form" class="form">
+                <label for="rainfall">Rainfall (mm):</label>
+                <input type="number" id="rainfall" name="rainfall" required>
+
+                <label for="temperature">Temperature (°C):</label>
+                <input type="number" id="temperature" name="temperature" required>
+
+                <button type="submit">Predict Yield</button>
+            </form>
+            <p id="yield-result" class="result"></p>
+        </section>
+
+        <section id="disease" class="section">
+            <h2>Disease Risk Prediction</h2>
+            <form id="disease-form" class="form">
+                <label for="humidity">Humidity (%):</label>
+                <input type="number" id="humidity" name="humidity" required>
+
+                <label for="temperature-disease">Temperature (°C):</label>
+                <input type="number" id="temperature-disease" name="temperature" required>
+
+                <button type="submit">Predict Disease Risk</button>
+            </form>
+            <p id="disease-result" class="result"></p>
+        </section>
+
+        <section id="irrigation" class="section">
+            <h2>Irrigation Advice</h2>
+            <form id="irrigation-form" class="form">
+                <label for="soil_moisture">Soil Moisture (%):</label>
+                <input type="number" id="soil_moisture" name="soil_moisture" required>
+
+                <label for="rain_forecast">Rain Forecast (mm):</label>
+                <input type="number" id="rain_forecast" name="rain_forecast" required>
+
+                <button type="submit">Get Advice</button>
+            </form>
+            <p id="irrigation-result" class="result"></p>
+        </section>
+
+        <section id="form-section" class="section">
+            <h2>Get Your Farming Insights</h2>
+            <form id="farming-form" class="form">
+                <label for="soil-type">Type of Soil:</label>
+                <select id="soil-type" name="soil-type" required>
+                    <option value="loam">Loam</option>
+                    <option value="sandy">Sandy</option>
+                    <option value="clay">Clay</option>
+                    <option value="silt">Silt</option>
+                </select>
+
+                <label for="planting-date">Planting Date:</label>
+                <input type="date" id="planting-date" name="planting-date" required>
+
+                <label for="crop-type">Crop Type:</label>
+                <input type="text" id="crop-type" name="crop-type" placeholder="e.g., Wheat, Corn" required>
+
+                <button type="submit">Predict Harvest</button>
+            </form>
+
+            <div id="result-section" class="result-section">
+                <h3>Prediction Results</h3>
+                <p id="result"></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 AgriSense. Smarter Farming Solutions.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript to handle form submissions and fetch predictions from the Flask API
+        const apiBase = 'http://127.0.0.1:5000';
+
+        document.getElementById('yield-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const rainfall = document.getElementById('rainfall').value;
+            const temperature = document.getElementById('temperature').value;
+
+            const response = await fetch(`${apiBase}/predict_yield`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ rainfall, temperature })
+            });
+            const data = await response.json();
+            document.getElementById('yield-result').textContent = `Predicted Yield: ${data.prediction} tons/ha`;
+        });
+
+        document.getElementById('disease-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const humidity = document.getElementById('humidity').value;
+            const temperature = document.getElementById('temperature-disease').value;
+
+            const response = await fetch(`${apiBase}/predict_disease`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ humidity, temperature })
+            });
+            const data = await response.json();
+            document.getElementById('disease-result').textContent = `Disease Risk: ${data.risk}`;
+        });
+
+        document.getElementById('irrigation-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const soil_moisture = document.getElementById('soil_moisture').value;
+            const rain_forecast = document.getElementById('rain_forecast').value;
+
+            const response = await fetch(`${apiBase}/predict_irrigation`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ soil_moisture, rain_forecast })
+            });
+            const data = await response.json();
+            document.getElementById('irrigation-result').textContent = `Advice: ${data.advice}`;
+        });
+
+        // JavaScript to handle farming insights form
+        document.getElementById("farming-form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const soilType = document.getElementById("soil-type").value;
+            const plantingDate = document.getElementById("planting-date").value;
+            const cropType = document.getElementById("crop-type").value;
+
+            try {
+                const response = await fetch("/predict_farming_insights", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        soil_type: soilType,
+                        planting_date: plantingDate,
+                        crop_type: cropType,
+                    }),
+                });
+
+                const data = await response.json();
+                const resultSection = document.getElementById("result-section");
+                resultSection.style.display = "block";
+                document.getElementById("result").innerHTML = ` 
+                    <strong>Estimated Yield:</strong> ${data.estimated_yield} tons/ha<br>
+                    <strong>Estimated Harvest Month:</strong> ${data.estimated_harvest_month}<br>
+                    <strong>Soil Suitability:</strong> ${data.soil_suitability}
+                `;
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Failed to fetch farming insights. Please try again.");
+            }
+        });
+    </script>
+</body>
+</html>
