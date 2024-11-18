@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriSense - Smarter Farming Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>AgriSense</h1>
+        </div>
+        <nav>
+            <a href="#about">About Us</a>
+            <a href="#features">Features</a>
+            <a href="#algorithms">Algorithms</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <h2>Smarter Farming Decisions, Better Yields</h2>
+            <p>Empowering farmers with data-driven insights for sustainable and profitable agriculture.</p>
+            <a href="#form-section" class="btn">Get Started</a>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <h2>About AgriSense</h2>
+            <p>AgriSense uses modern data analysis to help farmers optimize planting and harvest schedules, predict yields, and manage risks effectively.</p>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features">
+            <h2>Our Features</h2>
+            <div class="feature">
+                <h3>Planting Predictions</h3>
+                <p>Know the best time to plant your crops for maximum yield.</p>
+            </div>
+            <div class="feature">
+                <h3>Weather Forecasts</h3>
+                <p>Predict weather conditions and adapt your farming strategies.</p>
+            </div>
+            <div class="feature">
+                <h3>Harvest Scheduling</h3>
+                <p>Plan the perfect harvest schedule based on real-time data.</p>
+            </div>
+        </section>
+
+        <!-- Algorithms Section -->
+        <section id="algorithms">
+            <h2>Machine Learning Algorithms</h2>
+            
+            <!-- Linear Regression Example -->
+            <div class="algorithm">
+                <h3>Linear Regression for Yield Prediction</h3>
+                <p>This algorithm predicts crop yield based on soil quality, rainfall, and temperature.</p>
+                <form id="linear-regression-form">
+                    <label for="rainfall">Rainfall (mm):</label>
+                    <input type="number" id="rainfall" name="rainfall" required>
+                    <label for="temperature">Temperature (°C):</label>
+                    <input type="number" id="temperature" name="temperature" required>
+                    <button type="submit" class="btn">Predict Yield</button>
+                </form>
+                <div id="linear-regression-result" class="result"></div>
+            </div>
+
+            <!-- Naive Bayes Example -->
+            <div class="algorithm">
+                <h3>Naive Bayes for Disease Prediction</h3>
+                <p>This algorithm classifies the likelihood of diseases or pest attacks on crops based on environmental factors.</p>
+                <form id="naive-bayes-form">
+                    <label for="humidity">Humidity (%):</label>
+                    <input type="number" id="humidity" name="humidity" required>
+                    <label for="temp-nb">Temperature (°C):</label>
+                    <input type="number" id="temp-nb" name="temperature" required>
+                    <button type="submit" class="btn">Predict Disease Likelihood</button>
+                </form>
+                <div id="naive-bayes-result" class="result"></div>
+            </div>
+
+            <!-- Decision Tree Example -->
+            <div class="algorithm">
+                <h3>Decision Tree for Irrigation Advice</h3>
+                <p>This algorithm guides farmers on whether to irrigate crops based on soil moisture and weather data.</p>
+                <form id="decision-tree-form">
+                    <label for="soil-moisture">Soil Moisture (%):</label>
+                    <input type="number" id="soil-moisture" name="soil-moisture" required>
+                    <label for="forecast">Rain Forecast (mm):</label>
+                    <input type="number" id="forecast" name="forecast" required>
+                    <button type="submit" class="btn">Get Irrigation Advice</button>
+                </form>
+                <div id="decision-tree-result" class="result"></div>
+            </div>
+        </section>
+
+        <!-- Form Section for General Use -->
+        <section id="form-section">
+            <h2>Get Your Farming Insights</h2>
+            <form id="farming-form">
+                <label for="soil-type">Type of Soil:</label>
+                <select id="soil-type" name="soil-type">
+                    <option value="loam">Loam</option>
+                    <option value="sandy">Sandy</option>
+                    <option value="clay">Clay</option>
+                    <option value="silt">Silt</option>
+                </select>
+                <label for="planting-date">Planting Date:</label>
+                <input type="date" id="planting-date" name="planting-date" required>
+                <label for="crop-type">Crop Type:</label>
+                <input type="text" id="crop-type" name="crop-type" placeholder="e.g., Wheat, Corn" required>
+                <button type="submit" class="btn">Predict Harvest</button>
+            </form>
+            <div id="result-section" style="display: none;"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 AgriSense. All rights reserved.</p>
+    </footer>
+</body>
+</html>
